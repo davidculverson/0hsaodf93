@@ -429,7 +429,7 @@
                     "[resourceId('Microsoft.EventHub/namespaces/eventhubs', variables('eventHubNamespaceName'), variables('eventHubName'))]",
                     "[resourceId('Microsoft.Storage/storageAccounts', variables('backupStorageAccountName'))]",
                     "[resourceId('Microsoft.Storage/storageAccounts', variables('jobsStorageAccountName'))]",
-                    ]
+                    ],
                 "properties": {
                   "httpsOnly": true,
                   "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
