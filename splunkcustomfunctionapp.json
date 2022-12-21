@@ -424,7 +424,7 @@
                 "tags": "[union(parameters('allResourceTags'), createObject('SplunkDMDeletionOrder', 1))]",
                 "apiVersion": "2020-12-01",
                 "location": "[parameters('region')]",
-                "kind": "[if(variables('isReserved'), 'functionapp,linux', 'functionapp')]",
+                "kind": "functionapp,linux",
                 "dependsOn": [
                     "[resourceId('Microsoft.EventHub/namespaces/eventhubs', variables('eventHubNamespaceName'), variables('eventHubName'))]",
                     "[resourceId('Microsoft.Storage/storageAccounts', variables('backupStorageAccountName'))]",
@@ -433,7 +433,7 @@
                 "properties": {
                   "httpsOnly": true,
                   "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
-                  "reserved": "[variables('isReserved')]",
+                  "reserved": true,
                   "siteConfig": {
                     "functionsRuntimeScaleMonitoringEnabled": true,
                     "cors": {
