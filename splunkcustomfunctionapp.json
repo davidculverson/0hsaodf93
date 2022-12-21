@@ -428,7 +428,7 @@
                 "dependsOn": [
                     "[resourceId('Microsoft.EventHub/namespaces/eventhubs', variables('eventHubNamespaceName'), variables('eventHubName'))]",
                     "[resourceId('Microsoft.Storage/storageAccounts', variables('backupStorageAccountName'))]",
-                    "[resourceId('Microsoft.Storage/storageAccounts', variables('jobsStorageAccountName'))]",
+                    "[resourceId('Microsoft.Storage/storageAccounts', variables('jobsStorageAccountName'))]"
                     ],
                 "properties": {
                   "httpsOnly": true,
@@ -436,7 +436,6 @@
                   "reserved": "[variables('isReserved')]",
                   "siteConfig": {
                     "functionsRuntimeScaleMonitoringEnabled": true,
-                    "linuxFxVersion": "[if(variables('isReserved'), 'dotnet|3.1', json('null'))]",
                     "cors": {
                         "allowedOrigins": [
                           "*"
@@ -547,4 +546,4 @@
         }
       }
     ]
-  }
+}
