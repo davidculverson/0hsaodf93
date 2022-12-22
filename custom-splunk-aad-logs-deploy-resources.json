@@ -122,8 +122,11 @@
             },
             "enableEventhubMetadata": {
               "value": "[parameters('enableEventhubMetadata')]"
-            }
-          },
+            },
+            "appservicePlanName": {
+            "value": "[parameters('appservicePlanName')]"
+            }   
+        },
           "template": {
             "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
             "contentVersion": "1.0.0.0",
@@ -166,6 +169,9 @@
               },
               "enableEventhubMetadata": {
                 "type": "string"
+              },
+              "appservicePlanName": {
+                "type": "string"
               }
             },
             "variables": {
@@ -176,7 +182,6 @@
               "eventHubName": "splk-aad-logs-eventhub",
               "eventHubNamespaceName": "[if(equals(parameters('altEventHubNamespaceName'), ''), concat('splkAadLogsEH', parameters('scdmInputId')), parameters('altEventHubNamespaceName'))]",
               "functionName": "[if(equals(parameters('altFunctionName'), ''), concat('splkAadLogsFn', parameters('scdmInputId')), parameters('altFunctionName'))]",
-              "hostingPlanName": "[concat('splk-aad-logs-hosting-plan', uniqueString(parameters('scdmInputId')))]",
               "backupStorageAccountName": "[if(equals(parameters('altBackupStorageName'), ''), concat('splkaadstr', uniqueString(parameters('scdmInputId'))), parameters('altBackupStorageName'))]",
               "logsStorageAccountName": "[if(equals(parameters('altLogsStorageName'), ''), concat('splklogstr', uniqueString(parameters('scdmInputId'))), parameters('altLogsStorageName'))]",
               "jobsStorageAccountName": "[if(equals(parameters('altJobsStorageName'), ''), concat('splkjobstr', uniqueString(parameters('scdmInputId'))), parameters('altJobsStorageName'))]"
@@ -418,45 +423,6 @@
                 }
               },
               {
-                "type": "Microsoft.Web/serverfarms",
-                "tags": "[union(parameters('allResourceTags'), createObject('SplunkDMDeletionOrder', 2))]",
-                "apiVersion": "2020-12-01",
-                "name": "[variables('hostingPlanName')]",
-                "location": "[parameters('region')]",
-                "kind": "functionapp",
-                "properties": {
-                  "computeMode": "Dynamic",
-                  "reserved": true
-                },
-                "sku": {
-                  "name": "Y1",
-                  "tier": "Dynamic"
-                }
-              },
-              {
-                "type": "Microsoft.Web/serverfarms/providers/diagnosticSettings",
-                "tags": "[parameters('allResourceTags')]",
-                "apiVersion": "2017-05-01-preview",
-                "name": "[concat(variables('hostingPlanName'), '/Microsoft.Insights/', 'splunk-hosting-plan-diagnostic-settings')]",
-                "dependsOn": [
-                  "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
-                  "[resourceId('Microsoft.Storage/storageAccounts', variables('logsStorageAccountName'))]"
-                ],
-                "properties": {
-                  "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('logsStorageAccountName'))]",
-                  "metrics": [
-                    {
-                      "category": "AllMetrics",
-                      "enabled": true,
-                      "retentionPolicy": {
-                        "days": 60,
-                        "enabled": true
-                      }
-                    }
-                  ]
-                }
-              },
-              {
                 "name": "[variables('functionName')]",
                 "type": "Microsoft.Web/sites",
                 "tags": "[union(parameters('allResourceTags'), createObject('SplunkDMDeletionOrder', 1))]",
@@ -466,13 +432,14 @@
                 "dependsOn": [
                   "[resourceId('Microsoft.EventHub/namespaces/eventhubs', variables('eventHubNamespaceName'), variables('eventHubName'))]",
                   "[resourceId('Microsoft.Storage/storageAccounts', variables('backupStorageAccountName'))]",
-                  "[resourceId('Microsoft.Storage/storageAccounts', variables('jobsStorageAccountName'))]",
-                  "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]"
+                  "[resourceId('Microsoft.Storage/storageAccounts', variables('jobsStorageAccountName'))]"
                 ],
                 "properties": {
-                  "clientAffinityEnabled": false,
-                  "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
+                    "httpsOnly": true,
+                  "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('appservicePlanName'))]",
+                  "reserved": true,
                   "siteConfig": {
+                    "functionsRuntimeScaleMonitoringEnabled": false,
                     "cors": {
                       "allowedOrigins": [
                         "*"
