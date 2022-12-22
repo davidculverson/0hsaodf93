@@ -51,6 +51,10 @@
       "enableEventhubMetadata":{
         "type": "string",
         "defaultValue": "false"
+      },
+      "appservicePlanName":{
+        "type": "string",
+        "defaultValue": "false"
       }
     },
     "variables": {
