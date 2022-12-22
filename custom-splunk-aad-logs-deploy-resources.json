@@ -294,10 +294,9 @@
                 "name": "[variables('jobsStorageAccountName')]",
                 "location": "[parameters('region')]",
                 "sku": {
-                    "name": "Standard_LRS",
-                    "tier": "Standard"
+                    "name": "Standard_LRS"
                 },
-                "kind": "Storage",
+                "kind": "StorageV2",
                 "properties": {
                   "supportsHttpsTrafficOnly": true,
                   "allowBlobPublicAccess": false,
