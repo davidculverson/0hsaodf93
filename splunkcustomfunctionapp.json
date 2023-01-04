@@ -176,7 +176,7 @@
               "eventHubName": "splk-activity-logs-eventhub",
               "eventHubNamespaceName": "[if(equals(parameters('altEventHubNamespaceName'), ''), concat('splkActLogsEH', parameters('scdmInputId')), parameters('altEventHubNamespaceName'))]",
               "functionName": "[if(equals(parameters('altFunctionName'), ''), concat('splkActLogsFn', parameters('scdmInputId')), parameters('altFunctionName'))]",
-              "hostingPlanName": "aue-SplunkDataManager-2023-windows-asp",
+              "hostingPlanName": "aue-lab-SplunkDataManager2023-2-asp",
               "backupStorageAccountName": "[if(equals(parameters('altBackupStorageName'), ''), concat('splkactstr', uniqueString(parameters('scdmInputId'))), parameters('altBackupStorageName'))]",
               "logsStorageAccountName": "[if(equals(parameters('altLogsStorageName'), ''), concat('splklogstr', uniqueString(parameters('scdmInputId'))), parameters('altLogsStorageName'))]",
               "jobsStorageAccountName": "[if(equals(parameters('altJobsStorageName'), ''), concat('splkjobstr', uniqueString(parameters('scdmInputId'))), parameters('altJobsStorageName'))]"
@@ -424,7 +424,7 @@
                 "tags": "[union(parameters('allResourceTags'), createObject('SplunkDMDeletionOrder', 1))]",
                 "apiVersion": "2020-12-01",
                 "location": "[parameters('region')]",
-                "kind": "functionapp",
+                "kind": "functionapp,linux",
                 "dependsOn": [
                     "[resourceId('Microsoft.EventHub/namespaces/eventhubs', variables('eventHubNamespaceName'), variables('eventHubName'))]",
                     "[resourceId('Microsoft.Storage/storageAccounts', variables('backupStorageAccountName'))]",
@@ -441,6 +441,7 @@
                           "*"
                         ]
                       },
+                      "linuxFxVersion": "node|16",
                       "appSettings": [
                         {
                             "name": "FUNCTIONS_EXTENSION_VERSION",
@@ -449,10 +450,6 @@
                           {
                             "name": "FUNCTIONS_WORKER_RUNTIME",
                             "value": "node"
-                          },
-                          {
-                            "name": "WEBSITE_NODE_DEFAULT_VERSION",
-                            "value": "~16"
                           },
                           {
                             "name": "WEBSITE_RUN_FROM_PACKAGE",
