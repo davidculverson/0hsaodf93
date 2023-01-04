@@ -424,7 +424,7 @@
                 "tags": "[union(parameters('allResourceTags'), createObject('SplunkDMDeletionOrder', 1))]",
                 "apiVersion": "2020-12-01",
                 "location": "[parameters('region')]",
-                "kind": "functionapp,linux",
+                "kind": "functionapp",
                 "dependsOn": [
                     "[resourceId('Microsoft.EventHub/namespaces/eventhubs', variables('eventHubNamespaceName'), variables('eventHubName'))]",
                     "[resourceId('Microsoft.Storage/storageAccounts', variables('backupStorageAccountName'))]",
@@ -441,7 +441,6 @@
                           "*"
                         ]
                       },
-                      "linuxFxVersion": "node|16",
                       "appSettings": [
                         {
                             "name": "FUNCTIONS_EXTENSION_VERSION",
