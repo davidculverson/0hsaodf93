@@ -343,7 +343,8 @@
                 "location": "[parameters('region')]",
                 "properties": {
                   "isAutoInflateEnabled": true,
-                  "maximumThroughputUnits": "[variables('eventHubMaxThroughputUnits')]"
+                  "maximumThroughputUnits": "[variables('eventHubMaxThroughputUnits')]",
+                  "minimumTlsVersion": "1.2"
                 },
                 "sku": {
                   "name": "Standard",
@@ -368,9 +369,7 @@
                         "dependsOn": [
                           "[variables('eventHubName')]"
                         ],
-                        "properties": {
-                          "minimumTlsVersion": "1.2"
-                        }
+                        "properties": {}
                       }
                     ]
                   },
