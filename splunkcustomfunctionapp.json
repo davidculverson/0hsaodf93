@@ -489,8 +489,9 @@
                     "cors": {
                         "allowedOrigins": [
                           "*"
-                        ]
+                        ]                        
                       },
+                      "ftpsState": "Disabled",
                       "linuxFxVersion": "node|16",
                       "appSettings": [
                         {
@@ -557,7 +558,7 @@
                   }
                 },
                 "resources": []
-            },
+              },
               {
                 "type": "Microsoft.Web/sites/providers/diagnosticSettings",
                 "tags": "[parameters('allResourceTags')]",
