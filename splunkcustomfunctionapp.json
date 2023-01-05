@@ -419,47 +419,6 @@
                 }
               },
               {
-                "type": "Microsoft.EventHub/namespaces/networkRuleSets",
-                "apiVersion": "2022-01-01-preview",
-                "name": "[concat(parameters('namespaces_adf24353qergedgfg_name'), '/default')]",
-                "location": "Australia East",
-                "dependsOn": [
-                  "[resourceId('Microsoft.EventHub/namespaces', variables('eventHubNamespaceName'))]"
-                ],
-                "properties": {
-                    "publicNetworkAccess": "Enabled",
-                    "defaultAction": "Deny",
-                    "virtualNetworkRules": [],
-                    "ipRules": [
-                        {
-                            "ipMask": "20.211.0.0/17",
-                            "action": "Allow"
-                        },
-                        {
-                            "ipMask": "20.211.128.0/18",
-                            "action": "Allow"
-                        },
-                        {
-                            "ipMask": "20.213.0.0/17",
-                            "action": "Allow"
-                        },
-                        {
-                            "ipMask": "20.213.128.0/18",
-                            "action": "Allow"
-                        },
-                        {
-                            "ipMask": "20.213.192.0/20",
-                            "action": "Allow"
-                        },
-                        {
-                            "ipMask": "20.227.0.0/18",
-                            "action": "Allow"
-                        }
-                    ],
-                    "trustedServiceAccessEnabled": true
-                }
-              },
-              {
                 "name": "[variables('functionName')]",
                 "type": "Microsoft.Web/sites",
                 "tags": "[union(parameters('allResourceTags'), createObject('SplunkDMDeletionOrder', 1))]",
