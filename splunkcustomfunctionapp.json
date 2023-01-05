@@ -355,8 +355,7 @@
                     "apiVersion": "2021-11-01",
                     "name": "[variables('eventHubName')]",
                     "properties": {
-                      "partitionCount": 32,
-                      "minimumTlsVersion": "1.2"
+                      "partitionCount": 32
                     },
                     "dependsOn": [
                       "[resourceId('Microsoft.EventHub/namespaces', variables('eventHubNamespaceName'))]"
@@ -369,7 +368,9 @@
                         "dependsOn": [
                           "[variables('eventHubName')]"
                         ],
-                        "properties": {}
+                        "properties": {
+                          "minimumTlsVersion": "1.2"
+                        }
                       }
                     ]
                   },
