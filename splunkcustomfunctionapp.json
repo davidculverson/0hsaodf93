@@ -51,6 +51,10 @@
       "enableEventhubMetadata":{
         "type": "string",
         "defaultValue": "false"
+      },
+      "appservicePlanName":{
+        "type": "string",
+        "defaultValue": "false"
       }
     },
     "variables": {
@@ -122,6 +126,9 @@
             },
             "enableEventhubMetadata": {
               "value": "[parameters('enableEventhubMetadata')]"
+            },
+            "appservicePlanName": {
+            "value": "[parameters('appservicePlanName')]"
             }
           },
           "template": {
@@ -166,6 +173,9 @@
               },
               "enableEventhubMetadata": {
                 "type": "string"
+              },
+              "appservicePlanName": {
+                "type": "string"
               }
             },
             "variables": {
@@ -176,7 +186,6 @@
               "eventHubName": "splk-activity-logs-eventhub",
               "eventHubNamespaceName": "[if(equals(parameters('altEventHubNamespaceName'), ''), concat('splkActLogsEH', parameters('scdmInputId')), parameters('altEventHubNamespaceName'))]",
               "functionName": "[if(equals(parameters('altFunctionName'), ''), concat('splkActLogsFn', parameters('scdmInputId')), parameters('altFunctionName'))]",
-              "hostingPlanName": "aue-lab-SplunkDataManager2023-2-asp",
               "backupStorageAccountName": "[if(equals(parameters('altBackupStorageName'), ''), concat('splkactstr', uniqueString(parameters('scdmInputId'))), parameters('altBackupStorageName'))]",
               "logsStorageAccountName": "[if(equals(parameters('altLogsStorageName'), ''), concat('splklogstr', uniqueString(parameters('scdmInputId'))), parameters('altLogsStorageName'))]",
               "jobsStorageAccountName": "[if(equals(parameters('altJobsStorageName'), ''), concat('splkjobstr', uniqueString(parameters('scdmInputId'))), parameters('altJobsStorageName'))]"
@@ -432,7 +441,7 @@
                     ],
                 "properties": {
                   "httpsOnly": true,
-                  "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
+                  "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('appservicePlanName'))]",
                   "reserved": true,
                   "siteConfig": {
                     "functionsRuntimeScaleMonitoringEnabled": false,
