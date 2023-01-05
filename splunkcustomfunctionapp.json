@@ -492,6 +492,32 @@
                         ]                        
                       },
                       "ftpsState": "Disabled",
+                      "publicNetworkAccess": "Disabled",
+                      "ipSecurityRestrictions": [
+                        {
+                            "ipAddress": "0.0.0.0/0",
+                            "action": "Deny",
+                            "tag": "Default",
+                            "priority": 100,
+                            "name": "Deny All IPv4",
+                            "description": "Deny All IPv4"
+                        },
+                        {
+                            "ipAddress": "::/0",
+                            "action": "Deny",
+                            "tag": "Default",
+                            "priority": 110,
+                            "name": "Deny All IPv6",
+                            "description": "Deny All IPv6"
+                        },
+                        {
+                            "ipAddress": "Any",
+                            "action": "Allow",
+                            "priority": 2147483647,
+                            "name": "Allow all",
+                            "description": "Allow all access"
+                        }
+                    ],
                       "linuxFxVersion": "node|16",
                       "appSettings": [
                         {
