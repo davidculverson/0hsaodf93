@@ -509,15 +509,9 @@
                             "priority": 110,
                             "name": "Deny All IPv6",
                             "description": "Deny All IPv6"
-                        },
-                        {
-                            "ipAddress": "Any",
-                            "action": "Allow",
-                            "priority": 2147483647,
-                            "name": "Allow all",
-                            "description": "Allow all access"
                         }
-                    ],
+                      ],
+                      "scmIpSecurityRestrictionsUseMain": true,
                       "linuxFxVersion": "node|16",
                       "appSettings": [
                         {
