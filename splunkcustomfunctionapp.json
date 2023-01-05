@@ -430,7 +430,7 @@
               {
                 "type": "Microsoft.EventHub/namespaces/networkRuleSets",
                 "apiVersion": "2022-01-01-preview",
-                "name": "[concat('namespaces_', variables('eventHubNamespaceName'), '_name', '/default')]",
+                "name": "[concat(variables('eventHubNamespaceName'), '/default')]",
                 "location": "Australia East",
                 "dependsOn": [
                   "[resourceId('Microsoft.EventHub/namespaces', variables('eventHubNamespaceName'))]"
