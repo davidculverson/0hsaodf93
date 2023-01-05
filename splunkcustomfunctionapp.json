@@ -303,10 +303,9 @@
                 "name": "[variables('jobsStorageAccountName')]",
                 "location": "[parameters('region')]",
                 "sku": {
-                    "name": "Standard_LRS",
-                    "tier": "Standard"
+                    "name": "Standard_LRS"
                 },
-                "kind": "Storage",
+                "kind": "StorageV2",
                 "properties": {
                   "supportsHttpsTrafficOnly": true,
                   "allowBlobPublicAccess": false,
@@ -356,7 +355,8 @@
                     "apiVersion": "2021-11-01",
                     "name": "[variables('eventHubName')]",
                     "properties": {
-                      "partitionCount": 32
+                      "partitionCount": 32,
+                      "minimumTlsVersion": "1.2"
                     },
                     "dependsOn": [
                       "[resourceId('Microsoft.EventHub/namespaces', variables('eventHubNamespaceName'))]"
