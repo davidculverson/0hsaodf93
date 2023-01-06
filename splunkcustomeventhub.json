@@ -6,38 +6,10 @@
         "type": "string",
         "defaultValue": ""
       },
-      "altFunctionName": {
-        "type": "string",
-        "defaultValue": ""
-      },
-      "altBackupStorageName": {
-        "type": "string",
-        "defaultValue": ""
-      },
-      "altLogsStorageName": {
-        "type": "string",
-        "defaultValue": ""
-      },
-      "altJobsStorageName": {
-        "type": "string",
-        "defaultValue": ""
-      },
-      "functionPackageURL": {
-        "type": "string"
-      },
-      "hecToken": {
-        "type": "securestring"
-      },
-      "hecUrl": {
-        "type": "string"
-      },
       "region": {
         "type": "string"
       },
       "scdmInputId": {
-        "type": "string"
-      },
-      "servicePrincipalObjectId": {
         "type": "string"
       },
       "existingResourceGroupName": {
@@ -47,35 +19,26 @@
       "resourceTags": {
         "type": "object",
         "defaultValue": {}
-      },
-      "enableEventhubMetadata":{
-        "type": "string",
-        "defaultValue": "false"
-      },
-      "appservicePlanName":{
-        "type": "string",
-        "defaultValue": "false"
       }
     },
     "variables": {
       "resourceGroupName": "[if(equals(parameters('existingResourceGroupName'), ''), concat('SplunkDMDataIngest-', parameters('scdmInputId')), parameters('existingResourceGroupName'))]",
-      "resourceDeployment": "[concat('SplunkDMDataIngest-', parameters('scdmInputId'))]",
+      "resourceDeployment": "[concat('SplunkDMDataIngest-', parameters('scdmInputId'), 'EventHubHardening)]",
       "scdmInputTag": { "SplunkDMInputId": "[parameters('scdmInputId')]" },
       "allResourceTags": "[union(variables('scdmInputTag'), parameters('resourceTags'))]"
     },
     "resources": [
-      {
-        "type": "Microsoft.Resources/resourceGroups",
-        "apiVersion": "2021-04-01",
-        "location": "[parameters('region')]",
-        "name": "[variables('resourceGroupName')]",
-        "tags": "[union(variables('allResourceTags'), createObject('SplunkDMDeletionOrder', 10))]",
-        "condition":"[equals(parameters('existingResourceGroupName'), '')]",
-        "properties": {}
-      },
+        {
+            "type": "Microsoft.Resources/resourceGroups",
+            "apiVersion": "2021-04-01",
+            "location": "[parameters('region')]",
+            "name": "[variables('resourceGroupName')]",
+            "tags": "[union(variables('allResourceTags'), createObject('SplunkDMDeletionOrder', 10))]",
+            "condition":"[equals(parameters('existingResourceGroupName'), '')]",
+            "properties": {}
+          },
       {
         "type": "Microsoft.Resources/deployments",
-        "tags": "[union(variables('allResourceTags'), createObject('SplunkDMDeletionOrder', 9))]",
         "apiVersion": "2021-04-01",
         "name": "[variables('resourceDeployment')]",
         "resourceGroup": "[variables('resourceGroupName')]",
@@ -94,41 +57,11 @@
             "altEventHubNamespaceName": {
               "value": "[parameters('altEventHubNamespaceName')]"
             },
-            "altFunctionName": {
-              "value": "[parameters('altFunctionName')]"
-            },
-            "altBackupStorageName": {
-              "value": "[parameters('altBackupStorageName')]"
-            },
-            "altLogsStorageName": {
-              "value": "[parameters('altLogsStorageName')]"
-            },
-            "altJobsStorageName": {
-              "value": "[parameters('altJobsStorageName')]"
-            },
-            "functionPackageURL": {
-              "value": "[parameters('functionPackageURL')]"
-            },
-            "hecToken": {
-              "value": "[parameters('hecToken')]"
-            },
-            "hecUrl": {
-              "value": "[parameters('hecUrl')]"
-            },
             "region": {
-              "value": "[parameters('region')]"
-            },
+                "value": "[parameters('region')]"
+              },         
             "scdmInputId": {
               "value": "[parameters('scdmInputId')]"
-            },
-            "servicePrincipalObjectId": {
-              "value": "[parameters('servicePrincipalObjectId')]"
-            },
-            "enableEventhubMetadata": {
-              "value": "[parameters('enableEventhubMetadata')]"
-            },
-            "appservicePlanName": {
-            "value": "[parameters('appservicePlanName')]"
             }
           },
           "template": {
@@ -141,40 +74,10 @@
               "altEventHubNamespaceName": {
                 "type": "string"
               },
-              "altFunctionName": {
-                "type": "string"
-              },
-              "altBackupStorageName": {
-                "type": "string"
-              },
-              "altLogsStorageName": {
-                "type": "string"
-              },
-              "functionPackageURL": {
-                "type": "string"
-              },
-              "altJobsStorageName": {
-                "type": "string"
-              },
-              "hecToken": {
-                "type": "securestring"
-              },
-              "hecUrl": {
-                "type": "string"
-              },
               "region": {
                 "type": "string"
               },
               "scdmInputId": {
-                "type": "string"
-              },
-              "servicePrincipalObjectId": {
-                "type": "string"
-              },
-              "enableEventhubMetadata": {
-                "type": "string"
-              },
-              "appservicePlanName": {
                 "type": "string"
               }
             },
