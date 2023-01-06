@@ -23,7 +23,7 @@
     },
     "variables": {
       "resourceGroupName": "[if(equals(parameters('existingResourceGroupName'), ''), concat('SplunkDMDataIngest-', parameters('scdmInputId')), parameters('existingResourceGroupName'))]",
-      "resourceDeployment": "[concat('SplunkDMDataIngest-', parameters('scdmInputId'), 'EventHubHardening')]",
+      "resourceDeployment": "[concat('SplunkDM-', parameters('scdmInputId'), 'EventHubConfig')]",
       "scdmInputTag": { "SplunkDMInputId": "[parameters('scdmInputId')]" },
       "allResourceTags": "[union(variables('scdmInputTag'), parameters('resourceTags'))]"
     },
