@@ -105,7 +105,7 @@ param (
     [Parameter(Mandatory = $true)]
     [string] $SCDMInputId,
     [Parameter(Mandatory = $false)]
-    [string] $EventHubNameSpace    
+    [string] $EventHubNameSpace,    
     [Parameter(Mandatory = $false)]
     [string] $EventHubName = "splk-activity-logs-eventhub",
     [Parameter(Mandatory = $true, ParameterSetName = "EventHubAuthRuleIdOverride")]
@@ -115,7 +115,7 @@ param (
     [Parameter(Mandatory = $false, ParameterSetName = "DeriveEventHubAuthRuleId")]
     [string] $ExistingResourceGroupName="SplunkDMDataIngest-${SCDMInputId}",
     [Parameter(Mandatory = $true)]
-    [string] $TenantId,
+    [string] $TenantId
 )
 
 function Set-DiagnosticSetting {
