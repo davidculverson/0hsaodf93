@@ -55,6 +55,9 @@ under the License.
 .PARAMETER SCDMInputId
     The ID of the SCDM input.
 
+.PARAMETER EventHubNameSpace
+    The Name of the Event Hub Namespace. Defaults to "splkActLogsEH${SCDMInputId}".
+
 .PARAMETER EventHubName
     The name of the Event Hub that logs should be sent to. Defaults to
     'splk-activity-logs-eventhub'.
@@ -71,7 +74,7 @@ under the License.
 .PARAMETER TenantId
     The ID of the tenant the script is running under. Used to list
     subscriptions.
-
+ 
 .PARAMETER ExistingResourceGroupName
     The name of an existing resource group in Azure that the resources will be deployed to. Used to infer the EventHubAuthRuleId
 
@@ -102,6 +105,8 @@ param (
     [Parameter(Mandatory = $true)]
     [string] $SCDMInputId,
     [Parameter(Mandatory = $false)]
+    [string] $EventHubNameSpace    
+    [Parameter(Mandatory = $false)]
     [string] $EventHubName = "splk-activity-logs-eventhub",
     [Parameter(Mandatory = $true, ParameterSetName = "EventHubAuthRuleIdOverride")]
     [string] $EventHubAuthRuleId,
@@ -110,7 +115,7 @@ param (
     [Parameter(Mandatory = $false, ParameterSetName = "DeriveEventHubAuthRuleId")]
     [string] $ExistingResourceGroupName="SplunkDMDataIngest-${SCDMInputId}",
     [Parameter(Mandatory = $true)]
-    [string] $TenantId
+    [string] $TenantId,
 )
 
 function Set-DiagnosticSetting {
@@ -164,8 +169,13 @@ function Get-DiagnosticSettingExists {
 
 # Infer EventHubAuthRuleId if required
 if ($PSBoundParameters.ContainsKey('DestinationSubscriptionId')) {
-    $EventHubAuthRuleId = "/subscriptions/${DestinationSubscriptionId}/resourceGroups/${ExistingResourceGroupName}/providers/Microsoft.EventHub/namespaces/splkActLogsEH${SCDMInputId}/authorizationRules/splk-activity-logs-eventhub-auth-send"
-    Write-Host "Using Event Hub authorization rule id '${EventHubAuthRuleId}'"
+    if ($EventHubNameSpace) {
+        $EventHubAuthRuleId = "/subscriptions/${DestinationSubscriptionId}/resourceGroups/${ExistingResourceGroupName}/providers/Microsoft.EventHub/namespaces/${EventHubNameSpace}/authorizationRules/splk-activity-logs-eventhub-auth-send"
+    }
+    else {
+        $EventHubAuthRuleId = "/subscriptions/${DestinationSubscriptionId}/resourceGroups/${ExistingResourceGroupName}/providers/Microsoft.EventHub/namespaces/splkActLogsEH${SCDMInputId}/authorizationRules/splk-activity-logs-eventhub-auth-send"
+    }
+Write-Host "Using Event Hub authorization rule id '${EventHubAuthRuleId}'"
 }
 
 try {
