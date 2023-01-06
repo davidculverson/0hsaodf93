@@ -187,9 +187,7 @@
                 "apiVersion": "2022-01-01-preview",
                 "name": "[concat(variables('eventHubNamespaceName'), '/default')]",
                 "location": "Australia East",
-                "dependsOn": [
-                  "[resourceId('Microsoft.EventHub/namespaces', variables('eventHubNamespaceName'))]"
-                ],
+                "dependsOn": [],
                 "properties": {
                     "publicNetworkAccess": "Enabled",
                     "defaultAction": "Deny",
