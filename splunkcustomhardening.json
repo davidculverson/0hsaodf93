@@ -225,12 +225,12 @@
                         "bypass": "AzureServices",
                         "virtualNetworkRules": [
                             {
-                                "id": "[concat(variables('virtualnetworkid'), '/subnets/', parameters('Subnet1'))]"
+                                "id": "[concat(variables('virtualnetworkid'), '/subnets/', parameters('Subnet1'))]",
                                 "action": "Allow",
                                 "state": "Succeeded"
                             },
                             {
-                                "id": "[concat(variables('virtualnetworkid'), '/subnets/', parameters('Subnet2'))]"
+                                "id": "[concat(variables('virtualnetworkid'), '/subnets/', parameters('Subnet2'))]",
                                 "action": "Allow",
                                 "state": "Succeeded"
                             }
@@ -252,12 +252,12 @@
                         "bypass": "AzureServices",
                         "virtualNetworkRules": [
                             {
-                                "id": "[concat(variables('virtualnetworkid'), '/subnets/', parameters('Subnet1'))]"
+                                "id": "[concat(variables('virtualnetworkid'), '/subnets/', parameters('Subnet1'))]",
                                 "action": "Allow",
                                 "state": "Succeeded"
                             },
                             {
-                                "id": "[concat(variables('virtualnetworkid'), '/subnets/', parameters('Subnet2'))]"
+                                "id": "[concat(variables('virtualnetworkid'), '/subnets/', parameters('Subnet2'))]",
                                 "action": "Allow",
                                 "state": "Succeeded"
                             }
@@ -279,12 +279,12 @@
                         "bypass": "AzureServices",
                         "virtualNetworkRules": [
                             {
-                                "id": "[concat(variables('virtualnetworkid'), '/subnets/', parameters('Subnet1'))]"
+                                "id": "[concat(variables('virtualnetworkid'), '/subnets/', parameters('Subnet1'))]",
                                 "action": "Allow",
                                 "state": "Succeeded"
                             },
                             {
-                                "id": "[concat(variables('virtualnetworkid'), '/subnets/', parameters('Subnet2'))]"
+                                "id": "[concat(variables('virtualnetworkid'), '/subnets/', parameters('Subnet2'))]",
                                 "action": "Allow",
                                 "state": "Succeeded"
                             }
