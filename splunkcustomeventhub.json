@@ -87,7 +87,10 @@
               "region": {
                 "value": "[parameters('region')]"
               },         
-            "scdmInputId": {
+              "existingResourceGroupName": {
+                "value": "[parameters('existingResourceGroupName')]"
+              },    
+              "scdmInputId": {
               "value": "[parameters('scdmInputId')]"
             }
           },
