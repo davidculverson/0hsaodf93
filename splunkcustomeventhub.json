@@ -82,7 +82,7 @@
                 "value": "[parameters('Subnet1')]"
               },            
               "Subnet2": {
-                "value": "[parameters('Subnet1')]"
+                "value": "[parameters('Subnet2')]"
               }, 
               "region": {
                 "value": "[parameters('region')]"
