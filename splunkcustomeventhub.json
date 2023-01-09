@@ -76,7 +76,7 @@
                 "value": "[parameters('EventHubSubscriptionId')]"
               },
               "EventHubSubscriptionVNET": {
-                "value": "[parameters('EventHubSubscriptionId')]"
+                "value": "[parameters('EventHubSubscriptionVNET')]"
               },
               "Subnet1": {
                 "value": "[parameters('Subnet1')]"
