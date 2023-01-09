@@ -194,10 +194,7 @@
                         }
                       ]
                     },
-                    "dependsOn": [
-                      "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('EventHubSubscriptionVNET'), parameters('Subnet2'))]",
-                      "[resourceId('Microsoft.Network/virtualNetworks', parameters('EventHubSubscriptionVNET'))]"
-                    ]
+                    "dependsOn": []
                   }
             ]
           }
