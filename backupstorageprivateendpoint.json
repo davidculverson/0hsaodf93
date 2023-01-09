@@ -170,7 +170,7 @@
                 "eventHubNamespaceName": "[if(equals(parameters('altEventHubNamespaceName'), ''), concat('splkActLogsEH', parameters('scdmInputId')), parameters('altEventHubNamespaceName'))]",
                 "virtualnetworkid": "[concat('/subscriptions/',  parameters('EventHubSubscriptionId'), '/resourceGroups/', parameters('existingResourceGroupName'), '/providers/Microsoft.Network/virtualNetworks/', parameters('EventHubSubscriptionVNET'))]",
                 "privateEndpointName": "parameters('privateEndpointName')",
-                "targetSubResource": ["blob"]
+                "targetSubResource": "[array('blob')]"
             },
             "resources": [
                 {
