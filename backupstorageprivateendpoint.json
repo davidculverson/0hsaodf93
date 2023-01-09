@@ -50,6 +50,9 @@
         },
         "privateEndpointName": {
             "type": "string"
+        },
+        "targetSubResource": {
+            "type": "array"
         }
     },
     "variables": {
@@ -120,6 +123,11 @@
               },
               "privateEndpointName": {
                 "value": "[parameters('privateEndpointName')]"
+            },
+            "targetSubResource": {
+                "value": [
+                    "blob"
+                ]
             }
           },
           "template": {
@@ -164,13 +172,15 @@
               },
               "privateEndpointName": {
                 "type": "string"
-            }
+              },
+              "targetSubResource": {
+                "type": "array"
+              }
             },
             "variables": {
                 "eventHubNamespaceName": "[if(equals(parameters('altEventHubNamespaceName'), ''), concat('splkActLogsEH', parameters('scdmInputId')), parameters('altEventHubNamespaceName'))]",
                 "virtualnetworkid": "[concat('/subscriptions/',  parameters('EventHubSubscriptionId'), '/resourceGroups/', parameters('existingResourceGroupName'), '/providers/Microsoft.Network/virtualNetworks/', parameters('EventHubSubscriptionVNET'))]",
-                "privateEndpointName": "parameters('privateEndpointName')",
-                "targetSubResource": "[array('blob')]"
+                "privateEndpointName": "parameters('privateEndpointName')"
             },
             "resources": [
                 {
@@ -187,9 +197,7 @@
                           "name": "[variables('privateEndpointName')]",
                           "properties": {
                             "privateLinkServiceId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('altBackupStorageName'))]",
-                            "groupIds": [
-                                "[variables('targetSubResource')]"
-                            ]
+                            "groupIds": "[parameters('targetSubResource')]"
                           }
                         }
                       ]
