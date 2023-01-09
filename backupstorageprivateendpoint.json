@@ -54,7 +54,7 @@
     },
     "variables": {
       "resourceGroupName": "[if(equals(parameters('existingResourceGroupName'), ''), concat('SplunkDMDataIngest-', parameters('scdmInputId')), parameters('existingResourceGroupName'))]",
-      "resourceDeployment": "[concat('SplunkDM-', parameters('scdmInputId'), 'PrivateEndPointConfig')]",
+      "resourceDeployment": "[concat('SplunkDM-', parameters('scdmInputId'), 'PrivateEndPoint')]",
       "scdmInputTag": { "SplunkDMInputId": "[parameters('scdmInputId')]" },
       "allResourceTags": "[union(variables('scdmInputTag'), parameters('resourceTags'))]"
     },
