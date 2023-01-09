@@ -1,0 +1,218 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "altEventHubNamespaceName": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "EventHubSubscriptionId": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "EventHubSubscriptionVNET": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "Subnet1": {
+            "type": "string",
+            "defaultValue": ""
+        },      
+        "Subnet2": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "altBackupStorageName": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "altLogsStorageName": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "altJobsStorageName": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "region": {
+            "type": "string"
+        },
+        "scdmInputId": {
+            "type": "string"
+        },
+        "existingResourceGroupName": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "resourceTags": {
+            "type": "object",
+            "defaultValue": {}
+        },
+        "privateEndpointName": {
+            "type": "string"
+        },
+        "privateLinkResource": {
+            "type": "string"
+        }
+    },
+    "variables": {
+      "resourceGroupName": "[if(equals(parameters('existingResourceGroupName'), ''), concat('SplunkDMDataIngest-', parameters('scdmInputId')), parameters('existingResourceGroupName'))]",
+      "resourceDeployment": "[concat('SplunkDM-', parameters('scdmInputId'), 'EventHubConfig')]",
+      "scdmInputTag": { "SplunkDMInputId": "[parameters('scdmInputId')]" },
+      "allResourceTags": "[union(variables('scdmInputTag'), parameters('resourceTags'))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Resources/resourceGroups",
+            "apiVersion": "2021-04-01",
+            "location": "[parameters('region')]",
+            "name": "[variables('resourceGroupName')]",
+            "tags": "[union(variables('allResourceTags'), createObject('SplunkDMDeletionOrder', 10))]",
+            "condition":"[equals(parameters('existingResourceGroupName'), '')]",
+            "properties": {}
+          },
+      {
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2021-04-01",
+        "name": "[variables('resourceDeployment')]",
+        "resourceGroup": "[variables('resourceGroupName')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Resources/resourceGroups', variables('resourceGroupName'))]"
+        ],
+        "properties": {
+          "mode": "Incremental",
+          "expressionEvaluationOptions": {
+            "scope": "Inner"
+          },
+          "parameters": {
+            "allResourceTags": {
+              "value": "[variables('allResourceTags')]"
+            },
+            "altEventHubNamespaceName": {
+              "value": "[parameters('altEventHubNamespaceName')]"
+            },
+            "EventHubSubscriptionId": {
+                "value": "[parameters('EventHubSubscriptionId')]"
+              },
+              "EventHubSubscriptionVNET": {
+                "value": "[parameters('EventHubSubscriptionVNET')]"
+              },
+              "Subnet1": {
+                "value": "[parameters('Subnet1')]"
+              },            
+              "Subnet2": {
+                "value": "[parameters('Subnet2')]"
+              }, 
+              "altBackupStorageName": {
+                "value": "[parameters('altBackupStorageName')]"
+              },
+              "altLogsStorageName": {
+                "value": "[parameters('altLogsStorageName')]"
+              },
+              "altJobsStorageName": {
+                "value": "[parameters('altJobsStorageName')]"
+              },
+              "region": {
+                "value": "[parameters('region')]"
+              },         
+              "existingResourceGroupName": {
+                "value": "[parameters('existingResourceGroupName')]"
+              },    
+              "scdmInputId": {
+              "value": "[parameters('scdmInputId')]"
+              },
+              "privateEndpointName": {
+                "value": "[parameters('privateEndpointName')]"
+            },
+            "privateLinkResource": {
+                "value": "[parameters('privateLinkResource')]"
+            }
+          },
+          "template": {
+            "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+            "contentVersion": "1.0.0.0",
+            "parameters": {
+              "allResourceTags": {
+                "type": "object"
+              },
+              "altEventHubNamespaceName": {
+                "type": "string"
+              },
+              "EventHubSubscriptionId": {
+                "type": "string"
+              },
+              "EventHubSubscriptionVNET": {
+                "type": "string"
+              },
+              "Subnet1": {
+                "type": "string"
+              },
+              "Subnet2": {
+                "type": "string"
+              },
+              "altBackupStorageName": {
+                "type": "string"
+              },
+              "altLogsStorageName": {
+                "type": "string"
+              },
+              "altJobsStorageName": {
+                "type": "string"
+              },
+              "region": {
+                "type": "string"
+              },
+              "existingResourceGroupName": {
+                "type": "string"
+              },
+              "scdmInputId": {
+                "type": "string"
+              },
+              "privateEndpointName": {
+                "type": "string"
+            },
+            "privateLinkResource": {
+                "type": "string"
+            }
+            },
+            "variables": {
+                "eventHubNamespaceName": "[if(equals(parameters('altEventHubNamespaceName'), ''), concat('splkActLogsEH', parameters('scdmInputId')), parameters('altEventHubNamespaceName'))]",
+                "virtualnetworkid": "[concat('/subscriptions/',  parameters('EventHubSubscriptionId'), '/resourceGroups/', parameters('existingResourceGroupName'), '/providers/Microsoft.Network/virtualNetworks/', parameters('EventHubSubscriptionVNET'))]",
+                "privateEndpointName": "parameters('privateEndpointName')",
+                "location": "[parameters('region')]",
+                "targetSubResource": "blob"
+            },
+            "resources": [
+                {
+                    "type": "Microsoft.Network/privateEndpoints",
+                    "apiVersion": "2021-05-01",
+                    "name": "[variables('privateEndpointName')]",
+                    "location": "[parameters('location')]",
+                    "properties": {
+                      "subnet": {
+                        "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('EventHubSubscriptionVNET'), parameters('Subnet2'))]"
+                      },
+                      "privateLinkServiceConnections": [
+                        {
+                          "name": "[variables('privateEndpointName')]",
+                          "properties": {
+                            "privateLinkServiceId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('altBackupStorageName'))]",
+                            "groupIds": [
+                              "targetSubResource"
+                            ]
+                          }
+                        }
+                      ]
+                    },
+                    "dependsOn": [
+                      "[resourceId('Microsoft.Storage/storageAccounts', parameters('altBackupStorageName'))]",
+                      "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('EventHubSubscriptionVNET'), parameters('Subnet2'))]",
+                      "[resourceId('Microsoft.Network/virtualNetworks', parameters('EventHubSubscriptionVNET'))]"
+                    ]
+                  }
+            ]
+          }
+        }
+      }
+    ]
+}
