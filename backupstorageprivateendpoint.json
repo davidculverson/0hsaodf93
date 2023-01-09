@@ -50,9 +50,6 @@
         },
         "privateEndpointName": {
             "type": "string"
-        },
-        "privateLinkResource": {
-            "type": "string"
         }
     },
     "variables": {
@@ -123,9 +120,6 @@
               },
               "privateEndpointName": {
                 "value": "[parameters('privateEndpointName')]"
-            },
-            "privateLinkResource": {
-                "value": "[parameters('privateLinkResource')]"
             }
           },
           "template": {
@@ -170,16 +164,12 @@
               },
               "privateEndpointName": {
                 "type": "string"
-            },
-            "privateLinkResource": {
-                "type": "string"
             }
             },
             "variables": {
                 "eventHubNamespaceName": "[if(equals(parameters('altEventHubNamespaceName'), ''), concat('splkActLogsEH', parameters('scdmInputId')), parameters('altEventHubNamespaceName'))]",
                 "virtualnetworkid": "[concat('/subscriptions/',  parameters('EventHubSubscriptionId'), '/resourceGroups/', parameters('existingResourceGroupName'), '/providers/Microsoft.Network/virtualNetworks/', parameters('EventHubSubscriptionVNET'))]",
                 "privateEndpointName": "parameters('privateEndpointName')",
-                "location": "[parameters('region')]",
                 "targetSubResource": "blob"
             },
             "resources": [
@@ -187,7 +177,7 @@
                     "type": "Microsoft.Network/privateEndpoints",
                     "apiVersion": "2021-05-01",
                     "name": "[variables('privateEndpointName')]",
-                    "location": "[parameters('location')]",
+                    "location": "[parameters('region')]",
                     "properties": {
                       "subnet": {
                         "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('EventHubSubscriptionVNET'), parameters('Subnet2'))]"
