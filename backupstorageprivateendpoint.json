@@ -52,7 +52,8 @@
             "type": "string"
         },
         "targetSubResource": {
-            "type": "array"
+            "type": "array",
+            "defaultValue": ["blob"]
         }
     },
     "variables": {
