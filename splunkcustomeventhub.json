@@ -116,8 +116,10 @@
               "Subnet2": {
                 "type": "string"
               },
-
               "region": {
+                "type": "string"
+              },
+              "existingResourceGroupName": {
                 "type": "string"
               },
               "scdmInputId": {
