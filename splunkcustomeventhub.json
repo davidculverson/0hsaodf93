@@ -6,7 +6,22 @@
         "type": "string",
         "defaultValue": ""
       },
-      "region": {
+      "EventHubSubscriptionId": {
+        "type": "string",
+        "defaultValue": ""
+      },
+      "EventHubSubscriptionVNET": {
+        "type": "string",
+        "defaultValue": ""
+      },
+      "Subnet1": {
+        "type": "string",
+        "defaultValue": ""
+      },      
+      "Subnet2": {
+        "type": "string",
+        "defaultValue": ""
+      },         "region": {
         "type": "string"
       },
       "scdmInputId": {
@@ -57,7 +72,19 @@
             "altEventHubNamespaceName": {
               "value": "[parameters('altEventHubNamespaceName')]"
             },
-            "region": {
+            "EventHubSubscriptionId": {
+                "value": "[parameters('EventHubSubscriptionId')]"
+              },
+              "EventHubSubscriptionVNET": {
+                "value": "[parameters('EventHubSubscriptionId')]"
+              },
+              "Subnet1": {
+                "value": "[parameters('Subnet1')]"
+              },            
+              "Subnet2": {
+                "value": "[parameters('Subnet1')]"
+              }, 
+              "region": {
                 "value": "[parameters('region')]"
               },         
             "scdmInputId": {
@@ -74,6 +101,19 @@
               "altEventHubNamespaceName": {
                 "type": "string"
               },
+              "EventHubSubscriptionId": {
+                "type": "string"
+              },
+              "EventHubSubscriptionVNET": {
+                "type": "string"
+              },
+              "Subnet1": {
+                "type": "string"
+              },
+              "Subnet2": {
+                "type": "string"
+              },
+
               "region": {
                 "type": "string"
               },
@@ -82,7 +122,8 @@
               }
             },
             "variables": {
-              "eventHubNamespaceName": "[if(equals(parameters('altEventHubNamespaceName'), ''), concat('splkActLogsEH', parameters('scdmInputId')), parameters('altEventHubNamespaceName'))]"
+              "eventHubNamespaceName": "[if(equals(parameters('altEventHubNamespaceName'), ''), concat('splkActLogsEH', parameters('scdmInputId')), parameters('altEventHubNamespaceName'))]",
+              "virtualnetworkid": "[concat('/subscriptions/',  parameters('EventHubSubscriptionId'), '/resourceGroups/', parameters('existingResourceGroupName'), '/providers/Microsoft.Network/virtualNetworks/', parameters('EventHubSubscriptionVNET'))]"
             },
             "resources": [
               {
@@ -94,7 +135,20 @@
                 "properties": {
                     "publicNetworkAccess": "Enabled",
                     "defaultAction": "Deny",
-                    "virtualNetworkRules": [],
+                    "virtualNetworkRules": [
+                        {
+                            "subnet": {
+                                "id": "[concat(variables('virtualnetworkid'), '/subnets/', parameters('Subnet1'))]"
+                            },
+                            "ignoreMissingVnetServiceEndpoint": false
+                        },
+                        {
+                            "subnet": {
+                                "id": "[concat(variables('virtualnetworkid'), '/subnets/', parameters('Subnet2'))]"
+                            },
+                            "ignoreMissingVnetServiceEndpoint": false
+                        }
+                    ],
                     "ipRules": [
                         {
                             "ipMask": "20.211.0.0/17",
