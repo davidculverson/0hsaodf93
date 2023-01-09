@@ -188,7 +188,7 @@
                           "properties": {
                             "privateLinkServiceId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('altBackupStorageName'))]",
                             "groupIds": [
-                              "targetSubResource"
+                                "[variables('targetSubResource')]"
                             ]
                           }
                         }
