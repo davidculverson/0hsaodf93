@@ -195,7 +195,6 @@
                       ]
                     },
                     "dependsOn": [
-                      "[resourceId('Microsoft.Storage/storageAccounts', parameters('altBackupStorageName'))]",
                       "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('EventHubSubscriptionVNET'), parameters('Subnet2'))]",
                       "[resourceId('Microsoft.Network/virtualNetworks', parameters('EventHubSubscriptionVNET'))]"
                     ]
