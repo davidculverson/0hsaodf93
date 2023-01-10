@@ -196,7 +196,7 @@
                     "name": "[parameters('BackupStoragePrivateEndpointName')]",
                     "location": "[parameters('region')]",
                     "properties": {
-                      "customNetworkInterfaceName": "[concat(parameters('BackupStoragePrivateEndpointName'), '-nic']",
+                      "customNetworkInterfaceName": "[concat(parameters('BackupStoragePrivateEndpointName'), '-nic')]",
                       "subnet": {
                         "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('EventHubSubscriptionVNET'), parameters('Subnet2'))]"
                       },
