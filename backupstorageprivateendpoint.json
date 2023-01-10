@@ -196,6 +196,7 @@
                     "name": "[parameters('privateEndpointName')]",
                     "location": "[parameters('region')]",
                     "properties": {
+                      "customNetworkInterfaceName": "[parameters('privateEndpointName'), '-nic']",
                       "subnet": {
                         "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('EventHubSubscriptionVNET'), parameters('Subnet2'))]"
                       },
