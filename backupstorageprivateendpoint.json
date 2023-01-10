@@ -181,7 +181,7 @@
             "variables": {
                 "eventHubNamespaceName": "[if(equals(parameters('altEventHubNamespaceName'), ''), concat('splkActLogsEH', parameters('scdmInputId')), parameters('altEventHubNamespaceName'))]",
                 "virtualnetworkid": "[concat('/subscriptions/',  parameters('EventHubSubscriptionId'), '/resourceGroups/', parameters('existingResourceGroupName'), '/providers/Microsoft.Network/virtualNetworks/', parameters('EventHubSubscriptionVNET'))]",
-                "privateEndpointName": "parameters('privateEndpointName')",
+                "privateEndpointName": "[parameters('privateEndpointName')]",
                 "privateLinkServiceId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('altBackupStorageName'))]"
             },
             "resources": [
