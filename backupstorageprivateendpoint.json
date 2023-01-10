@@ -228,7 +228,7 @@
                 {
                     "apiVersion": "2018-09-01",
                     "type": "Microsoft.Network/privateDnsZones",
-                    "name": "variables('BackupStoragePrivateDNSZone')",
+                    "name": "[variables('BackupStoragePrivateDNSZone')]",
                     "location": "global",
                     "dependsOn": [],
                     "tags": {},
