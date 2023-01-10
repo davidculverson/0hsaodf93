@@ -57,9 +57,6 @@
         },
         "BackupStoragePrivateEndpointIP": {
             "type": "string"
-        },
-        "BackupStoragePrivateDNSZone": {
-            "type": "string"
         }
     },
     "variables": {
@@ -138,10 +135,7 @@
               },
               "BackupStoragePrivateEndpointIP": {
                 "value": "[parameters('BackupStoragePrivateEndpointIP')]"
-              },
-              "BackupStoragePrivateDNSZone": {
-                "value": "[parameters('BackupStoragePrivateDNSZone')]"
-              }            
+              }           
           },
           "template": {
             "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
@@ -191,12 +185,13 @@
               },
               "BackupStoragePrivateEndpointIP": {
                 "type": "string"
-              },
-              "BackupStoragePrivateDNSZone": {
-                "type": "string"
-              }              
+              }           
             },
             "variables": {
+                "privateDnsZones_test_lab_com_name": {
+                    "value": null
+                },
+                "BackupStoragePrivateDNSZone": "[concat(parameters('altBackupStorageName'), '.blob.core.windows.net')]"
             },
             "resources": [
                 {
@@ -233,11 +228,27 @@
                 {
                     "apiVersion": "2018-09-01",
                     "type": "Microsoft.Network/privateDnsZones",
-                    "name": "[parameters('BackupStoragePrivateDNSZone')]",
+                    "name": "BackupStoragePrivateDNSZone",
                     "location": "global",
                     "dependsOn": [],
                     "tags": {},
                     "properties": {}
+                },
+                {
+                    "type": "Microsoft.Network/privateDnsZones/A",
+                    "apiVersion": "2018-09-01",
+                    "name": "[concat(variables('BackupStoragePrivateDNSZone'), '/@')]",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Network/privateDnsZones', parameters('BackupStoragePrivateDNSZone'))]"
+                    ],
+                    "properties": {
+                        "ttl": 60,
+                        "aRecords": [
+                            {
+                                "ipv4Address": "[parameters('BackupStoragePrivateEndpointIP')]"
+                            }
+                        ]
+                    }
                 }
             ]
           }
