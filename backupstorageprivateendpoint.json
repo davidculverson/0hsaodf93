@@ -205,7 +205,6 @@
                           "properties": {
                             "privateLinkServiceId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('altBackupStorageName'))]",
                             "groupIds": "[parameters('targetSubResource')]",
-                            "memberName": "blob",
                             "privateIPAddress": "[parameters('BackupStoragePrivateEndpointIP')]"
                           }
                         }
