@@ -197,15 +197,15 @@
                     "location": "[parameters('region')]",
                     "properties": {
                       "subnet": {
-                        "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('EventHubSubscriptionVNET'), parameters('Subnet2'))]"
-                      },
+                        "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('EventHubSubscriptionVNET'), parameters('Subnet2'))]",
+                        "privateIPAddress": "[parameters('BackupStoragePrivateEndpointIP')]"
+                    },
                       "privateLinkServiceConnections": [
                         {
                           "name": "[parameters('privateEndpointName')]",
                           "properties": {
                             "privateLinkServiceId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('altBackupStorageName'))]",
-                            "groupIds": "[parameters('targetSubResource')]",
-                            "privateIPAddress": "[parameters('BackupStoragePrivateEndpointIP')]"
+                            "groupIds": "[parameters('targetSubResource')]"
                           }
                         }
                       ]
