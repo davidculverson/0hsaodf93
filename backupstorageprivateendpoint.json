@@ -239,7 +239,7 @@
                     "apiVersion": "2018-09-01",
                     "name": "[concat(variables('BackupStoragePrivateDNSZone'), '/@')]",
                     "dependsOn": [
-                        "[resourceId('Microsoft.Network/privateDnsZones', parameters('BackupStoragePrivateDNSZone'))]"
+                        "[resourceId('Microsoft.Network/privateDnsZones', variables('BackupStoragePrivateDNSZone'))]"
                     ],
                     "properties": {
                         "ttl": 60,
