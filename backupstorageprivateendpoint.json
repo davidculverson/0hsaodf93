@@ -54,6 +54,9 @@
         "targetSubResource": {
             "type": "array",
             "defaultValue": ["blob"]
+        },
+        "BackupStoragePrivateEndpointIP": {
+            "type": "string"
         }
     },
     "variables": {
@@ -124,12 +127,15 @@
               },
               "privateEndpointName": {
                 "value": "[parameters('privateEndpointName')]"
-            },
-            "targetSubResource": {
+              },
+              "targetSubResource": {
                 "value": [
                     "blob"
                 ]
-            }
+              },
+              "BackupStoragePrivateEndpointIP": {
+                "value": "[parameters('BackupStoragePrivateEndpointIP')]"
+            }            
           },
           "template": {
             "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
@@ -176,6 +182,9 @@
               },
               "targetSubResource": {
                 "type": "array"
+              },
+              "BackupStoragePrivateEndpointIP": {
+                "type": "string"
               }
             },
             "variables": {
@@ -195,13 +204,14 @@
                           "name": "[parameters('privateEndpointName')]",
                           "properties": {
                             "privateLinkServiceId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('altBackupStorageName'))]",
-                            "groupIds": "[parameters('targetSubResource')]"
+                            "groupIds": "[parameters('targetSubResource')]",
+                            "memberName": "blob",
+                            "privateIPAddress": "[parameters('BackupStoragePrivateEndpointIP')]"
                           }
                         }
                       ]
-                    },
-                    "dependsOn": []
-                  }
+                    }
+                }
             ]
           }
         }
