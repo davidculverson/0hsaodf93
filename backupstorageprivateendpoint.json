@@ -238,6 +238,9 @@
                     "type": "Microsoft.Network/privateDnsZones/A",
                     "apiVersion": "2018-09-01",
                     "name": "[concat(variables('BackupStoragePrivateDNSZone'), '/@')]",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Network/privateDnsZones', variables('BackupStoragePrivateDNSZone'))]"
+                    ],
                     "properties": {
                         "ttl": 60,
                         "aRecords": [
@@ -251,6 +254,9 @@
                     "type": "Microsoft.Network/privateDnsZones/SOA",
                     "apiVersion": "2018-09-01",
                     "name": "[concat(variables('BackupStoragePrivateDNSZone'), '/@')]",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Network/privateDnsZones', variables('BackupStoragePrivateDNSZone'))]"
+                    ],
                     "properties": {
                         "ttl": 3600,
                         "soaRecord": {
