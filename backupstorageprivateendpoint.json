@@ -197,9 +197,8 @@
                     "location": "[parameters('region')]",
                     "properties": {
                       "subnet": {
-                        "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('EventHubSubscriptionVNET'), parameters('Subnet2'))]",
-                        "privateIPAddress": "[parameters('BackupStoragePrivateEndpointIP')]"
-                    },
+                        "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('EventHubSubscriptionVNET'), parameters('Subnet2'))]"
+                      },
                       "privateLinkServiceConnections": [
                         {
                           "name": "[parameters('privateEndpointName')]",
@@ -208,7 +207,17 @@
                             "groupIds": "[parameters('targetSubResource')]"
                           }
                         }
-                      ]
+                      ],
+                      "ipConfigurations": [
+                        {
+                            "name": "[parameters('BackupStoragePrivateEndpointIP')]",
+                            "properties": {
+                                "memberName": "blob",
+                                "groupId": "blob",
+                                "privateIPAddress": "[parameters('BackupStoragePrivateEndpointIP')]"
+                            }
+                        }
+                    ]
                     }
                 }
             ]
