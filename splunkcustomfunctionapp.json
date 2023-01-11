@@ -407,7 +407,7 @@
               {
                 "type": "Microsoft.EventHub/namespaces/providers/diagnosticSettings",
                 "tags": "[parameters('allResourceTags')]",
-                "apiVersion": "2022-01-01-preview",
+                "apiVersion": "2017-05-01-preview",
                 "name": "[concat(variables('eventHubNamespaceName'), '/Microsoft.Insights/', 'splunk-eventhub-namespace-diagnostic-settings')]",
                 "dependsOn": [
                   "[resourceId('Microsoft.EventHub/namespaces', variables('eventHubNamespaceName'))]",
