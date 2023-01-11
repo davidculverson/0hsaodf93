@@ -340,6 +340,62 @@
                             }
                         ]
                     }
+                },
+                {
+                    "type": "Microsoft.Network/privateEndpoints",
+                    "apiVersion": "2021-05-01",
+                    "name": "[parameters('JobsStoragePrivateEndpointName')]",
+                    "location": "[parameters('region')]",
+                    "properties": {
+                      "customNetworkInterfaceName": "[concat(parameters('JobsStoragePrivateEndpointName'), '-nic')]",
+                      "subnet": {
+                        "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('EventHubSubscriptionVNET'), parameters('Subnet2'))]"
+                      },
+                      "privateLinkServiceConnections": [
+                        {
+                          "name": "[parameters('JobsStoragePrivateEndpointName')]",
+                          "properties": {
+                            "privateLinkServiceId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('altJobsStorageName'))]",
+                            "groupIds": "[parameters('targetSubResource')]"
+                          }
+                        }
+                      ],
+                      "ipConfigurations": [
+                        {
+                            "name": "[parameters('JobsStoragePrivateEndpointIP')]",
+                            "properties": {
+                                "memberName": "blob",
+                                "groupId": "blob",
+                                "privateIPAddress": "[parameters('JobsStoragePrivateEndpointIP')]"
+                            }
+                        }
+                    ]
+                    }
+                },
+                {
+                    "apiVersion": "2018-09-01",
+                    "type": "Microsoft.Network/privateDnsZones",
+                    "name": "[variables('JobStoragePrivateDNSZone')]",
+                    "location": "global",
+                    "dependsOn": [],
+                    "tags": {},
+                    "properties": {}
+                },
+                {
+                    "type": "Microsoft.Network/privateDnsZones/A",
+                    "apiVersion": "2018-09-01",
+                    "name": "[concat(variables('JobStoragePrivateDNSZone'), '/@')]",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Network/privateDnsZones', variables('JobStoragePrivateDNSZone'))]"
+                    ],
+                    "properties": {
+                        "ttl": 60,
+                        "aRecords": [
+                            {
+                                "ipv4Address": "[parameters('LogsStoragePrivateEndpointIP')]"
+                            }
+                        ]
+                    }
                 }
             ]
           }
