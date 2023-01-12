@@ -172,58 +172,6 @@
                 }
               },
               {
-                "type": "Microsoft.EventHub/namespaces/networkRuleSets",
-                "apiVersion": "2022-01-01-preview",
-                "name": "[concat(variables('eventHubNamespaceName'), '/default')]",
-                "location": "Australia East",
-                "dependsOn": [],
-                "properties": {
-                    "publicNetworkAccess": "Enabled",
-                    "defaultAction": "Deny",
-                    "virtualNetworkRules": [
-                        {
-                            "subnet": {
-                                "id": "[concat(variables('virtualnetworkid'), '/subnets/', parameters('Subnet1'))]"
-                            },
-                            "ignoreMissingVnetServiceEndpoint": false
-                        },
-                        {
-                            "subnet": {
-                                "id": "[concat(variables('virtualnetworkid'), '/subnets/', parameters('Subnet2'))]"
-                            },
-                            "ignoreMissingVnetServiceEndpoint": false
-                        }
-                    ],
-                    "ipRules": [
-                        {
-                            "ipMask": "20.211.0.0/17",
-                            "action": "Allow"
-                        },
-                        {
-                            "ipMask": "20.211.128.0/18",
-                            "action": "Allow"
-                        },
-                        {
-                            "ipMask": "20.213.0.0/17",
-                            "action": "Allow"
-                        },
-                        {
-                            "ipMask": "20.213.128.0/18",
-                            "action": "Allow"
-                        },
-                        {
-                            "ipMask": "20.213.192.0/20",
-                            "action": "Allow"
-                        },
-                        {
-                            "ipMask": "20.227.0.0/18",
-                            "action": "Allow"
-                        }
-                    ],
-                    "trustedServiceAccessEnabled": true
-                }
-              },
-              {
                 "type": "Microsoft.Storage/storageAccounts",
                 "apiVersion": "2022-05-01",
                 "name": "[parameters('altBackupStorageName')]",
