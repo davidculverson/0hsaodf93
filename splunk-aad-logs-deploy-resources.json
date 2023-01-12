@@ -495,11 +495,7 @@
                       },
                       {
                         "name": "AzureWebJobsStorage",
-                        "value": "[concat(
-                          'DefaultEndpointsProtocol=https;AccountName=',
-                          variables('jobsStorageAccountName'),
-                          ';AccountKey=',
-                          listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('jobsStorageAccountName')), '2021-04-01').keys[0].value)]"
+                        "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('jobsStorageAccountName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('jobsStorageAccountName')), '2021-04-01').keys[0].value)]"
                       },
                       {
                         "name": "ConsumerGroupName",
@@ -519,11 +515,7 @@
                       },
                       {
                         "name": "FailedEventsStorageConnection",
-                        "value": "[concat(
-                          'DefaultEndpointsProtocol=https;AccountName=',
-                          variables('backupStorageAccountName'),
-                          ';AccountKey=',
-                          listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('backupStorageAccountName')), '2021-04-01').keys[0].value)]"
+                        "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('backupStorageAccountName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('backupStorageAccountName')), '2021-04-01').keys[0].value)]"
                       },
                       {
                         "name": "HecUrl",
