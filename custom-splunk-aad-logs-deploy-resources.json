@@ -444,32 +444,12 @@
                   "reserved": true,
                   "siteConfig": {
                     "functionsRuntimeScaleMonitoringEnabled": false,
+                    "alwaysOn": true,
                     "cors": {
                       "allowedOrigins": [
                         "*"
                       ]
                     },
-                    "ftpsState": "Disabled",
-                    "publicNetworkAccess": "Disabled",
-                    "ipSecurityRestrictions": [
-                      {
-                          "ipAddress": "0.0.0.0/0",
-                          "action": "Deny",
-                          "tag": "Default",
-                          "priority": 100,
-                          "name": "Deny All IPv4",
-                          "description": "Deny All IPv4"
-                      },
-                      {
-                          "ipAddress": "::/0",
-                          "action": "Deny",
-                          "tag": "Default",
-                          "priority": 110,
-                          "name": "Deny All IPv6",
-                          "description": "Deny All IPv6"
-                      }
-                    ],
-                    "scmIpSecurityRestrictionsUseMain": true,
                     "linuxFxVersion": "node|16",
                     "appSettings": [
                       {

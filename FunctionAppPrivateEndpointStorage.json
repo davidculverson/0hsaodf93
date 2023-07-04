@@ -503,6 +503,7 @@
           "siteConfig": {
             "vnetRouteAllEnabled": true,
             "functionsRuntimeScaleMonitoringEnabled": true,
+            "alwaysOn": true,
             "linuxFxVersion": "[if(variables('isReserved'), 'dotnet|3.1', json('null'))]",
             "appSettings": [
               {

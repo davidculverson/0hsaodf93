@@ -504,6 +504,7 @@
           "vnetRouteAllEnabled": true,
           "functionsRuntimeScaleMonitoringEnabled": true,
           "linuxFxVersion": "[if(variables('isReserved'), 'dotnet|3.1', json('null'))]",
+          "alwaysOn": true,
           "appSettings": [
             {
               "name": "APPINSIGHTS_INSTRUMENTATIONKEY",

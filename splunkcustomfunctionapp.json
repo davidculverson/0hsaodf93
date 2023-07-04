@@ -443,6 +443,7 @@
                   "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('appservicePlanName'))]",
                   "reserved": true,
                   "siteConfig": {
+                    "alwaysOn": true,
                     "functionsRuntimeScaleMonitoringEnabled": false,
                     "cors": {
                         "allowedOrigins": [
